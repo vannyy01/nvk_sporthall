@@ -14,7 +14,7 @@ use yii\web\IdentityInterface;
 /**
  * This is the model class for table "users".
  *
- * @property string $id
+ * @property int $id
  * @property string $user_name
  * @property string $name
  * @property string $second_name
@@ -150,9 +150,9 @@ class User extends ActiveRecord implements IdentityInterface, GetUser
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getId(): string
+    public function getId(): int
     {
         return $this->id;
     }
