@@ -150,12 +150,13 @@ class SiteController extends Controller
     public function actionEnroll()
     {
         $enrolls = new Enrolls();
-        $list = Affairs::find()->select(['id', 'affair_time', 'trainer'])->where('clients < 5')->all();
+        $list = Affairs::find()->select(['id', 'affair_time', 'trainer'])->where('clients < 5')->andWhere("affair_time <".time())->all();
         foreach ($list as $value) {
             $value->trainer = $value->getFullUserName(false);
         }
         $list = ArrayHelper::toArray($list);
         $list = ArrayHelper::map($list, 'id', "affair_time", "trainer");
+        $enrolls->verifycode = md5("fdf".rand(1,1000));
         if ($enrolls->load(Yii::$app->request->post())) {
             $enrolls->name = htmlspecialchars(trim($enrolls->name));
             $enrolls->second_name = htmlspecialchars(trim($enrolls->second_name));

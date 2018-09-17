@@ -60,7 +60,6 @@ $this->params['breadcrumbs']['title'] = $this->title;
                         'clearIncomplete' => true
                     ]
                 ])->label("Мобільний номер") ?>
-                <?= $form->field($enrolls, 'verifycode')->widget(Captcha::classname())->label("Ви не робот?") ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
