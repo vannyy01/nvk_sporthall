@@ -152,7 +152,7 @@ class User extends ActiveRecord implements IdentityInterface, GetUser
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }
