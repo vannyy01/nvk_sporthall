@@ -11,11 +11,12 @@ class UploadForm extends Model
      * @var UploadedFile
      */
     public $imageFile;
+    public $directory;
 
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
 
@@ -27,7 +28,7 @@ class UploadForm extends Model
     {
         if ($this->validate()) {
             if (isset($this->imageFile) &&
-                $this->imageFile->saveAs('public/img/news/' . $this->imageFile->baseName . '.' . $this->imageFile->extension)) {
+                $this->imageFile->saveAs($this->directory . $this->imageFile->baseName . '.' . $this->imageFile->extension)) {
                 return true;
             }
         }
@@ -37,9 +38,9 @@ class UploadForm extends Model
     /**
      * @return string
      */
-    public function getImageName():string
+    public function getImageName(): string
     {
-        return '/public/img/news/' . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+        return $this->directory . $this->imageFile->baseName . '.' . $this->imageFile->extension;
     }
 
 }

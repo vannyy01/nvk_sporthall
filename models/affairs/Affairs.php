@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\models\affairs;
 
 use app\models\enrolls\Enrolls;
+use app\models\GetUser;
 use app\models\prices\Prices;
 use app\models\users\User;
 use yii\db\ActiveQuery;
@@ -22,7 +23,7 @@ use yii\db\ActiveRecord;
  * @property User $trainer0
  * @property Enrolls[] $enrolls
  */
-class Affairs extends ActiveRecord
+class Affairs extends ActiveRecord implements GetUser
 {
     public $virtual_date;
     public $virtual_time;
@@ -73,11 +74,20 @@ class Affairs extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return array|null|ActiveRecord
      */
-    public function getUser(): ActiveQuery
+    public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'trainer']);
+        return $this->hasOne(User::className(), ['id' => 'trainer'])->one();
+    }
+
+    /**
+     * @param bool $withLogin
+     * @return string
+     */
+    public function getFullUserName(bool $withLogin = true): string
+    {
+        return $withLogin ? $this->getUser()->name . ' ' . $this->getUser()->second_name . ' ' . $this->getUser()->user_name : $this->getUser()->name . ' ' . $this->getUser()->second_name;
     }
 
     /**
@@ -87,6 +97,7 @@ class Affairs extends ActiveRecord
     {
         return $this->hasMany(Enrolls::className(), ['affairs_id' => 'id']);
     }
+
 
     /**
      * @inheritdoc

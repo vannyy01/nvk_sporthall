@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace app\models\news;
 
-use app\models\queries\news\NewsQuery;
-use app\models\User;
-use yii\db\ActiveQuery;
+use app\models\GetUser;
+use app\models\users\User;
 use yii\db\ActiveRecord;
 
 /**
@@ -19,7 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $author
  *  * @property string $image
  */
-class News extends ActiveRecord
+class News extends ActiveRecord implements GetUser
 {
     /**
      * @return string
@@ -53,29 +52,42 @@ class News extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'header' => 'Header',
-            'date' => 'Date',
-            'short_description' => 'Short Description',
-            'full_description' => 'Full Description',
-            'author' => 'Author',
-            'image' => 'Image',
+            'header' => 'Заголовок',
+            'date' => 'Дата',
+            'short_description' => 'Короткий опис',
+            'full_description' => 'Повний опис',
+            'author' => 'Автор',
+            'image' => 'Фото',
         ];
     }
 
-    public function getAuthor0()
+    /**
+     * @return array|null|ActiveRecord
+     */
+    public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'author'])->one();
     }
 
     /**
+     * @param bool $withLogin
+     * @return string
+     */
+    public function getFullUserName(bool $withLogin = true): string
+    {
+        return $withLogin ? $this->getAuthor()->name . ' ' .
+            $this->getAuthor()->second_name . '(' . $this->getAuthor()->user_name . ')' : $this->getAuthor()->name . ' ' .
+            $this->getAuthor()->second_name;
+    }
+
+    /**
      * @inheritdoc
-     * @return \app\models\queries\news\NewsQuery the active query used by this AR class.
+     * @return \app\models\news\NewsQuery the active query used by this AR class.
      */
     public static function find(): NewsQuery
     {
         return new NewsQuery(get_called_class());
     }
-
 
 
 }

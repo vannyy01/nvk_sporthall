@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
         "public/css/clean-blog-min/clean-blog.min.css",
         //"public/css/clean-blog.css",
         "public/css/newCSS.css",
+        "public/css/photos.css",
         "public/unitegallery/css/unite-gallery.css",
         "public/unitegallery/themes/default/ug-theme-default.css",
     ];
@@ -38,6 +39,7 @@ class AppAsset extends AssetBundle
         "public/unitegallery/themes/tiles/ug-theme-tiles.js",
         "public/unitegallery/js/unitegallery.min.js",
         "public/unitegallery/themes/default/ug-theme-default.js",
+        "public/js/nvk_scripts.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',

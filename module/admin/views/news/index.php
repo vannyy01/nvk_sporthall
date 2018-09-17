@@ -3,8 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\NewsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Новини';
@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'header',
             'date',
             'short_description',
-          //  'author',
+            [
+                'attribute' => 'author',
+                'content' => function (\app\models\news\News $value): string {
+                    return $value->getFullUserName(false);
+                }
+            ],
             'image',
 
             ['class' => 'yii\grid\ActionColumn'],

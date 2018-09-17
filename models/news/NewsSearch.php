@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace app\models\search;
+namespace app\models\news;
+
 
 use Yii;
 use yii\base\Model;

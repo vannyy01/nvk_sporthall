@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace app\module\admin\controllers;
 
+use app\models\news\NewsSearch;
 use app\models\UploadForm;
 use Yii;
 use app\models\news\News;
-use app\models\search\NewsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -59,15 +58,14 @@ class NewsController extends Controller
         $model = new News();
         $img = new UploadForm();
         $message = "";
-        $model->author = "vannyy";
+        $model->author = Yii::$app->user->identity->id;
         if ($model->load(Yii::$app->request->post())) {
             $img->imageFile = UploadedFile::getInstance($img, 'imageFile');
-            if (Yii::$app->request->isPost) {
-                $model->image = $img->getImageName();
-                if ($img->upload() && $model->save()) {
-                    // file is uploaded successfully
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+            $img->directory = './public/img/news/';
+            $model->image = ltrim($img->getImageName(), ".");
+            if ($img->upload() && $model->save()) {
+                // file is uploaded successfully
+                return $this->redirect(['view', 'id' => $model->id]);
             }
             $message = "<p style='color: red'><b>Нажаль фотографія не завантажилася</b></p>";
         }
@@ -93,8 +91,16 @@ class NewsController extends Controller
         $img = new UploadForm();
         $message = "";
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $img->imageFile = UploadedFile::getInstance($img, 'imageFile');
+            $img->directory = './public/img/news/';
+            $model->image = ltrim($img->getImageName(), ".");
+
+            if ($img->upload() && $model->save()) {
+                // file is uploaded successfully
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            $message = "<p style='color: red'><b>Нажаль фотографія не завантажилася</b></p>";
         }
 
         return $this->render('update', [

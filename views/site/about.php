@@ -8,7 +8,7 @@ $this->title = 'Про нас';
 $this->params['breadcrumbs']['title'] = $this->title;
 ?>
 <!-- Page Header -->
-<header class="masthead" style="background-image: url('./public/img/about.png')">
+<header class="masthead" style="background-image: url('./public/img_pages/about.png')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">

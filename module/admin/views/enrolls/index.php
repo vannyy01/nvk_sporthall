@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\enrolls\EnrollsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Enrolls';
+$this->title = 'Записи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="enrolls-index">

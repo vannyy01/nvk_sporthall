@@ -64,7 +64,9 @@ class EnrollsController extends Controller
         $time = date("Y-m-d H:i:s", time());
 
         $affairs = Affairs::find()->where("affair_time > '$time'")->asArray()->all();
-
+        if (empty($affairs)) {
+            return $this->redirect(['/admin/affairs']);
+        }
         return $this->render('create', [
             'model' => $model,
             'affairs' => $affairs,
@@ -90,7 +92,9 @@ class EnrollsController extends Controller
         $time = date("Y-m-d H:i:s", time());
 
         $affairs = Affairs::find()->where("affair_time > '$time'")->asArray()->all();
-
+        if (empty($affairs)) {
+            return $this->redirect(['/admin/affairs']);
+        }
         return $this->render('update', [
             'model' => $model,
             'affairs' => $affairs,

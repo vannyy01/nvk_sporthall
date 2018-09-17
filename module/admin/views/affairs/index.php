@@ -34,11 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'clients',
             [
                 'attribute' =>  'user.name',
-                "label" => "Ім'я"
-            ],
-            [
-                'attribute' =>  'user.second_name',
-                "label" => "Прізвище"
+                'content' => function (\app\models\affairs\Affairs $value): string {
+                    return $value->getFullUserName(false);
+                },
+                "label" => "Тренер"
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

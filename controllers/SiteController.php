@@ -10,6 +10,7 @@ use app\models\Login;
 use app\models\news\News;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\data\Pagination;
@@ -20,9 +21,9 @@ class SiteController extends Controller
     public $layout = 'structure';
 
     /**
-     * @inheritdoc
+     * @return array
      */
-    public function behaviors()
+    public function behaviors():array
     {
         return [
             'access' => [
@@ -46,9 +47,9 @@ class SiteController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
-    public function actions()
+    public function actions():array
     {
         return [
             'error' => [
@@ -62,11 +63,9 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays homepage.
-     *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex():string
     {
 
         $news = News::find();
@@ -87,9 +86,8 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays these one news page.
-     * @param string $id
-     * @return string
+     * @param $id
+     * @return string|Response
      */
     public function actionView($id)
     {
@@ -98,7 +96,6 @@ class SiteController extends Controller
             $news = News::find()->where(['id' => $id])
                 ->one()
         ) {
-            $this->layout = 'structure';
             return $this->render('news', [
                 'news' => $news,
             ]);
@@ -111,7 +108,7 @@ class SiteController extends Controller
     /**
      * @return string
      */
-    public function actionAllnews()
+    public function actionAllnews():string
     {
         $news = News::find();
 
@@ -129,60 +126,51 @@ class SiteController extends Controller
             'news' => $news,
             'pagination' => $pagination,
         ]);
-
-
-        // Yii::$app->session->setFlash('newsError', 'Проблема з розділом');
-        //  return $this->redirect('index');
-
-
     }
 
     /**
-     * Displays about page.
-     *
      * @return string
      */
-    public function actionAbout()
+    public function actionAbout():string
     {
         return $this->render('about');
     }
 
     /**
-     * Displays gallery page.
-     *
      * @return string
      */
-
-    public function actionGallery()
+    public function actionGallery():string
     {
         return $this->render('gallery');
     }
 
     /**
-     * Displays info about affairs from db and sing up new enroll page.
-     *
-     * @return string
+     * @return string|Response
      */
     public function actionEnroll()
     {
         $enrolls = new Enrolls();
-        $list = Affairs::find()->select(['id', 'time', 'trainer'])->where('clients <5')->asArray()->all();
-
+        $list = Affairs::find()->select(['id', 'affair_time', 'trainer'])->where('clients < 5')->all();
+        foreach ($list as $value) {
+            $value->trainer = $value->getFullUserName(false);
+        }
+        $list = ArrayHelper::toArray($list);
+        $list = ArrayHelper::map($list, 'id', "affair_time", "trainer");
         if ($enrolls->load(Yii::$app->request->post())) {
-            $isValid = $enrolls->validate();
-            if ($isValid) {
-
-                $message = "Ви записалися на заняття " . $_POST['Enrolls']['time'];
-
-                $affairs = Affairs::findOne(['time' => $_POST["Enrolls"]["time"]]);
+            $enrolls->name = htmlspecialchars(trim($enrolls->name));
+            $enrolls->second_name = htmlspecialchars(trim($enrolls->second_name));
+            $enrolls->email = htmlspecialchars(trim($enrolls->email));
+            $enrolls->phone = htmlspecialchars(trim($enrolls->phone));
+            $enrolls->verifycode = htmlspecialchars(trim($enrolls->verifycode));
+            if ($enrolls->validate() && $enrolls->save()) {
+                $affairs = $enrolls->getAffairs()->one();
+                $message = "Ви записалися на заняття " . $affairs->affair_time;
                 $affairs->updateCounters(['clients' => 1]);
                 Yii::$app->session->setFlash('success', $message);
                 return $this->redirect('enroll');
-
             }
-
         }
-        return $this->render('contact', [
+        return $this->render('enroll', [
             'enrolls' => $enrolls,
             'list' => $list,
         ]);
@@ -202,7 +190,7 @@ class SiteController extends Controller
         if ($login_model->load(Yii::$app->request->post(), 'Login')) {
             if ($login_model->validate() && $login_model->isUserBanned()) {
                 Yii::$app->user->login($login_model->getUser());
-                return $this->redirect(['admin/default']);
+                return $this->redirect(['admin/index']);
             }
         }
         return $this->render('login', ['model' => $login_model]);

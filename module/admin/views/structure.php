@@ -56,10 +56,11 @@ AppAsset::register($this);
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/default">Головна</a>
+                    <a class="nav-link" href="/admin/index">Головна</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
                         Меню адмінки
                     </a>
                     <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -68,14 +69,19 @@ AppAsset::register($this);
                         <li class="dropdown-item"><a href="/admin/news">Новини</a></li>
                         <li class="dropdown-item"><a href="/admin/prices">Ціни</a></li>
                         <li class="dropdown-divider"></li>
-                        <li class="dropdown-item"><a href="user/">Користувачі</a></li>
+                        <li class="dropdown-item"><a href="/admin/user">Користувачі</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/gallery">Галерея</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/enroll">Запис</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        Зображення
+                    </a>
+                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                        <li class="dropdown-item"><a href="/admin/index/photo?page=1">Фото</a></li>
+                        <li class="dropdown-item"><a href="/admin/index/createphoto">Завантажити
+                                зображення</a></li>
+                    </ul>
                 </li>
                 <?php
                 echo !Yii::$app->user->isGuest ? (

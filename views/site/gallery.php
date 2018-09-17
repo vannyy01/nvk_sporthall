@@ -2,14 +2,12 @@
 
 /* @var $this yii\web\View */
 
-use yii\helpers\Html;
-
 $this->title = 'Галерея';
 $this->params['breadcrumbs']['title'] = $this->title;
 ?>
 <!-- Page Header -->
 
-<header class="masthead" style="background-image: url('./public/img/woman.jpg')">
+<header class="masthead" style="background-image: url('./public/img_pages/woman.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">
@@ -24,34 +22,15 @@ $this->params['breadcrumbs']['title'] = $this->title;
 
 
 <!-- Main Content -->
-<div class="container">
+<div class="container" style="margin-top: 50px">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             <div id="gallery" style="">
-
                 <?php
-                $directory = "./public/gallery";    // Папка с изображениями
+                $directory = "./public/img/gallery";    // Папка с изображениями
                 $allowed_types = ["jpg", "png", "gif"];  //разрешеные типы изображений
-                $file_parts = [];
-                $ext = "";
-                $title = "";
-                $i = 0;
-                //пробуем открыть папку
-                $dir_handle = @opendir($directory) or die("Ошибка при открытии папки !!!");
-                while ($file = readdir($dir_handle))    //поиск по файлам
-                {
-                    if ($file == "." || $file == "..") continue;  //пропустить ссылки на другие папки
-                    $file_parts = explode(".", $file);          //разделить имя файла и поместить его в массив
-                    $ext = strtolower(array_pop($file_parts));   //последний элеменет - это расширение
 
-
-                    if (in_array($ext, $allowed_types)) {
-                        echo '<img src="' . $directory . '/' . $file . '" class="pimg" alt="'.strstr($file,'.',true).'"  data-image="'.$directory.'/' . $file . '" /> ';
-                        $i++;
-                    }
-
-                }
-                closedir($dir_handle);
+                \app\models\helpers\OwnHelper::showImage($allowed_types, $directory);
                 ?>
             </div>
         </div>
@@ -59,14 +38,3 @@ $this->params['breadcrumbs']['title'] = $this->title;
 </div>
 
 <hr>
-
-<script type="text/javascript">
-
-    jQuery(document).ready(function(){
-        jQuery("#gallery").unitegallery({
-            theme_enable_preloader: true,
-            gallery_theme: "tiles"
-        });
-    });
-
-</script>

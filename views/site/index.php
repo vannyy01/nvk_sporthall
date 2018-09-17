@@ -9,7 +9,7 @@ $this->params['breadcrumbs']['title'] = $this->title;
 
 ?>
 
-<header class="masthead st-1-bl" style="background-image: url('./public/img/new-shad.jpg')">
+<header class="masthead st-1-bl" style="background-image: url('./public/img_pages/new-shad.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">

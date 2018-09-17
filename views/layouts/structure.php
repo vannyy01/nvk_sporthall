@@ -27,7 +27,11 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
 
     <!-- Gallery assets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Custom fonts for this template -->
     <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
           type='text/css'>
@@ -54,10 +58,10 @@ AppAsset::register($this);
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Головна</a>
+                    <a class="nav-link" href="/about">Про нас</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">Про нас</a>
+                    <a class="nav-link" href="/allnews">Новини</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/gallery">Галерея</a>
@@ -115,6 +119,8 @@ AppAsset::register($this);
                     </li>
                 </ul>
                 <p class="copyright text-muted"> &copy; NVK SPORT HALL 2017</p>
+                <p class="copyright text-muted"> Developed by <a href="https://www.facebook.com/VanyaKravchenko98">Ivan Kravchenko</a></p>
+
             </div>
         </div>
     </div>

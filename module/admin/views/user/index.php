@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'pass_hash',
             [
                 'attribute' => 'role',
-                'content' => function ($value): string {
+                'content' => function (\app\models\users\User $value): string {
                     switch ($value->role) {
                         case 10:
                             return "Moderator " . $value->role;

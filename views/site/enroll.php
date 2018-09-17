@@ -5,7 +5,7 @@
 
 /* @var $list app\models\affairs\Affairs */
 
-/* @var $enrolls app\models\affairs\Enrolls */
+/* @var $enrolls app\models\enrolls\Enrolls */
 
 
 
@@ -21,7 +21,7 @@ $this->params['breadcrumbs']['title'] = $this->title;
 <div class="site-contact">
 
     <!-- Page Header -->
-    <header class="masthead" style="background-image: url('./public/img/enroll.jpg')">
+    <header class="masthead" style="background-image: url('./public/img_pages/enroll.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
@@ -45,11 +45,22 @@ $this->params['breadcrumbs']['title'] = $this->title;
                 </div>
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
-                <?= $form->field($enrolls, 'time')->dropDownList(ArrayHelper::map($list, 'time', 'time', 'trainer'))->label('Виберіть час заняття') ?>
+                <?= $form->field($enrolls, 'affairs_id')->dropDownList($list) ?>
                 <?= $form->field($enrolls, 'name')->label("Ім'я") ?>
                 <?= $form->field($enrolls, 'second_name')->label("Прізвище") ?>
                 <?= $form->field($enrolls, 'email')->label("Електрону пошту") ?>
-                <?= $form->field($enrolls, 'phone')->label("Телефонний номер") ?>
+                <?= $form->field($enrolls, 'phone')->widget(\yii\widgets\MaskedInput::className(), [
+                    'mask' => '+38 (099) 999-99-99',
+                    'options' => [
+                        'class' => 'form-control placeholder-style',
+                        'id' => 'phone2',
+                        'placeholder' => ('Мобільний номер')
+                    ],
+                    'clientOptions' => [
+                        'greedy' => false,
+                        'clearIncomplete' => true
+                    ]
+                ])->label("Мобільний номер") ?>
                 <?= $form->field($enrolls, 'verifycode')->widget(Captcha::classname(), [
                 ])->label("Ви не робот?") ?>
 

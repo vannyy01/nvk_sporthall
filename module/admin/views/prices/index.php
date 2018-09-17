@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'price',
             [
-                'header' => 'Status',
+                'header' => 'Опис',
                 'class' => 'yii\grid\CheckboxColumn', 'checkboxOptions' => function ($model) {
                 return ($model->status == 1) ? ['checked' => "checked", "disabled" => true] : ["disabled" => true];
             }

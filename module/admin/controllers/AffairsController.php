@@ -59,7 +59,7 @@ class AffairsController extends Controller
     {
         $model = new Affairs();
         $model->affair_time = (Yii::$app->request->post())["Affairs"]["virtual_date"] . " " . (Yii::$app->request->post())["Affairs"]["virtual_time"] . ":00";
-        if ($model->load(Yii::$app->request->post()) && !empty($model->time) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && !empty($model->affair_time) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id, 'trainer' => $model->trainer, 'prices_id' => $model->prices_id]);
         }
         $trainerList = User::findAll(['role' => User::ROLE_TRAINER]);

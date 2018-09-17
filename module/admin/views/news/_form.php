@@ -21,10 +21,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'full_description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($img, 'imageFile')->fileInput() ?>
+    <?= $form->field($img, 'imageFile')->fileInput()->label("Вибрати зображення") ?>
 
-    <?= $form->field($model, 'author')->textInput(['disabled' => true, "value" => $model->getAuthor0()->name]) ?>
-
+    <?= $form->field($model, 'author')->textInput(['disabled' => true, "value" => $model->getFullUserName()]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

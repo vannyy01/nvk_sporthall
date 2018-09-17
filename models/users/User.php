@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace app\models\users;
 
 use app\models\affairs\Affairs;
+use app\models\GetUser;
 use app\models\news\News;
+use yii\base\InvalidArgumentException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -23,7 +25,7 @@ use yii\web\IdentityInterface;
  * @property Affairs[] $affairs
  * @property News[] $news
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface, GetUser
 {
     const ROLE_ADMIN = 20;
     const ROLE_TRAINER = 10;
@@ -169,6 +171,26 @@ class User extends ActiveRecord implements IdentityInterface
     public static function getStatusesArray(): array
     {
         return [static::ROLE_TRAINER, static::ROLE_ADMIN, static::ROLE_BANNED];
+    }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public static function getUserNameById(int $id): string
+    {
+        if ($user = static::findOne(['id' => $id]))
+            return $user->getFullUserName(false);
+        throw new InvalidArgumentException("This User ID does not exist.");
+    }
+
+    /**
+     * @param bool $withLogin
+     * @return string
+     */
+    public function getFullUserName(bool $withLogin = true): string
+    {
+        return $withLogin ? $this->name . ' ' . $this->second_name . ' ' . $this->user_name : $this->name . ' ' . $this->second_name;
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
